@@ -1,11 +1,11 @@
 import {createInterface} from 'readline';
-import {Duplex, PassThrough, Readable} from 'stream';
+import { PassThrough } from 'stream';
 import { RED, RESET, YELLOW } from './codes';
 
 const colors = Object.entries({
     ERR: RED,
     WARN: YELLOW,
-    INFO: RESET,
+    INFO: '',
 });
 
 function colorize(stream: NodeJS.ReadableStream) {
@@ -13,14 +13,16 @@ function colorize(stream: NodeJS.ReadableStream) {
 
     const readline = createInterface(stream)
     
+    let currentColor = '';
+
     readline.on('line', line => {
         const colorcode = colors.find(([search]) => line.includes(search))?.[1];
 
-        if (colorcode) {
-            outputStream.write(colorcode);
+        if (colorcode !== undefined) {
+            currentColor = colorcode;
         }
         
-        outputStream.write(line + '\n');
+        outputStream.write(`${currentColor}${line}${RESET}\n`);
     })
     
     return outputStream;

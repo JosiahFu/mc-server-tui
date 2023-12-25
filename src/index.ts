@@ -1,8 +1,8 @@
 import { spawn } from 'child_process';
 import { runUI } from './layout';
 
-const args = [...process.argv]
-args.shift(); // Remove the executable argument
+const args = process.argv.slice(2); // Remove the executable and script path
+
 const command = args.shift() // Remove
 
 if (command === undefined) {
@@ -11,5 +11,14 @@ if (command === undefined) {
 }
 
 const child_process = spawn(command, args)
+
+child_process.on('exit', code => {
+    process.stdout.write('\n');
+    process.exit(code ?? undefined);
+});
+
+process.on('SIGINT', () => {
+    child_process.stdin.write('stop');
+})
 
 runUI(child_process);

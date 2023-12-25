@@ -1,35 +1,28 @@
 import { ChildProcess } from 'child_process';
-import { createInterface } from 'readline/promises';
+import { createInterface } from 'readline';
 import { colorize } from './colorizer';
-import { Writable } from 'stream';
-import { ERASE, RESET, RESTORE, SAVE } from './codes';
+import { ERASE, FORWARD, RESTORE, SAVE } from './codes';
 
 
-function runUI(child_process: ChildProcess) {
-    let currentInput = '';
-
-    const userWrite = new Writable();
-    userWrite._write = (chunk) => {
-        currentInput += chunk;
-        process.stdout.write(chunk);
-    }
-
-    const readUser = createInterface(process.stdin, userWrite);
+async function runUI(child_process: ChildProcess) {
+    const readUser = createInterface({
+        input: process.stdin,
+        output: process.stdout,
+        prompt: '> ',
+        terminal: true,
+    });
     const readOutput = createInterface(colorize(child_process.stdout!))
     
     process.stdout.write(SAVE);
+    readUser.prompt();
     
     readUser.on('line', line => {
         child_process.stdin?.write(line);
-        currentInput = '';
+        readUser.prompt();
     });
     
     readOutput.on('line', line => {
-        process.stdout.write(RESTORE);
-        process.stdout.write(ERASE);
-        process.stdout.write(line + '\n');
-        process.stdout.write(SAVE);
-        process.stdout.write(currentInput);
+        process.stdout.write(RESTORE + ERASE + line + '\n' + SAVE + '> ' + readUser.line + RESTORE + FORWARD(2 + readUser.cursor));
     });
 }
 

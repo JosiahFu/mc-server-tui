@@ -12,3 +12,7 @@ export const SAVE = `${ESC}[s`
 export const RESTORE = `${ESC}[u`
 
 export const ERASE = `${ESC}[0J`
+
+export function FORWARD(chars: number | string = '') {
+    return `${ESC}[${chars}C`
+}
