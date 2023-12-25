@@ -1,6 +1,6 @@
 import {createInterface} from 'readline';
 import {Duplex, PassThrough, Readable} from 'stream';
-import { RED, RESET, YELLOW } from './codes.js';
+import { RED, RESET, YELLOW } from './codes';
 
 const colors = Object.entries({
     ERR: RED,

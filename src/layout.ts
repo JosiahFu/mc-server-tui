@@ -1,8 +1,8 @@
 import { ChildProcess } from 'child_process';
 import { createInterface } from 'readline/promises';
-import { colorize } from './colorizer.js';
+import { colorize } from './colorizer';
 import { Writable } from 'stream';
-import { ERASE, RESET, RESTORE, SAVE } from './codes.js';
+import { ERASE, RESET, RESTORE, SAVE } from './codes';
 
 
 function runUI(child_process: ChildProcess) {

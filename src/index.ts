@@ -1,6 +1,5 @@
 import { spawn } from 'child_process';
-import { runUI } from './layout.js';
-import { colorize } from './colorizer.js';
+import { runUI } from './layout';
 
 const args = [...process.argv]
 args.shift(); // Remove the executable argument
