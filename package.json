@@ -1,6 +1,6 @@
 {
   "name": "mc-server-tui",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A TUI for Minecraft Servers",
   "scripts": {
     "build": "rollup -c",
