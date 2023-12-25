@@ -17,13 +17,18 @@
     "url": "https://github.com/JosiahFu/mc-server-tui/issues"
   },
   "homepage": "https://github.com/JosiahFu/mc-server-tui#readme",
-  "type": "module",
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.5",
     "@types/node": "^20.10.5",
     "rollup": "^4.9.1",
+    "rollup-plugin-resolve-shebang": "^1.0.1",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
-  }
+  },
+  "type": "module",
+  "bin": "dist/index.js",
+  "files": [
+    "dist/index.js"
+  ]
 }
