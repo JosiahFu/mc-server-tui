@@ -1,31 +1,44 @@
-import { createInterface } from 'readline';
-import { PassThrough } from 'stream';
+import { PassThrough, Transform, TransformCallback } from 'stream';
 import { RED, RESET, YELLOW } from './codes';
 
 const colors = Object.entries({
     ERR: RED,
     WARN: YELLOW,
-    INFO: '',
+    INFO: RESET,
 });
 
-function colorize(stream: NodeJS.ReadableStream) {
-    const outputStream = new PassThrough();
+// Assumes input does not have partial lines
+class ColorizerTransform extends Transform {
+    currentColor = '';
 
-    const readline = createInterface(stream);
+    _transform(
+        chunk: any,
+        _: BufferEncoding,
+        callback: TransformCallback
+    ): void {
+        const prevColor = this.currentColor;
 
-    let currentColor = '';
+        const chunkString: string = chunk.toString();
 
-    readline.on('line', line => {
-        const colorcode = colors.find(([search]) => line.includes(search))?.[1];
+        const lines = chunkString.split('\n');
 
-        if (colorcode !== undefined) {
-            currentColor = colorcode;
-        }
+        const coloredLines = lines.map(line => {
+            const colorcode = colors.find(([search]) =>
+                line.includes(search)
+            )?.[1];
 
-        outputStream.write(`${currentColor}${line}${RESET}\n`);
-    });
+            if (colorcode === undefined || colorcode === this.currentColor) {
+                return line;
+            }
 
-    return outputStream;
+            this.currentColor = colorcode;
+            return `${colorcode}${line}`;
+        });
+
+        this.push(prevColor + coloredLines.join('\n') + RESET);
+
+        callback();
+    }
 }
 
-export { colorize };
+export { ColorizerTransform };

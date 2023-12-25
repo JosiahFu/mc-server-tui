@@ -1,16 +1,16 @@
 import { ChildProcess } from 'child_process';
 import { createInterface } from 'readline';
-import { colorize } from './colorizer';
+import { ColorizerTransform } from './colorizer';
 import { ERASE, FORWARD, RESTORE, SAVE } from './codes';
 
-async function runUI(child_process: ChildProcess) {
+async function runUI(child_process: ChildProcess, onSigInt?: () => void) {
     const readUser = createInterface({
         input: process.stdin,
         output: process.stdout,
         prompt: '> ',
         terminal: true,
     });
-    const readOutput = createInterface(colorize(child_process.stdout!));
+    const output = child_process.stdout!.pipe(new ColorizerTransform());
 
     process.stdout.write(SAVE);
     readUser.prompt();
@@ -20,17 +20,20 @@ async function runUI(child_process: ChildProcess) {
         readUser.prompt();
     });
 
-    readOutput.on('line', line => {
+    onSigInt && readUser.on('SIGINT', onSigInt);
+
+    output.on('data', chunk => {
+        const chunkString: string = chunk.toString();
+
         process.stdout.write(
             RESTORE +
-            ERASE +
-            line +
-            '\n' +
-            SAVE +
-            '> ' +
-            readUser.line +
-            RESTORE +
-            FORWARD(2 + readUser.cursor) // +2 for the prompt
+                ERASE +
+                chunkString +
+                SAVE +
+                '> ' +
+                readUser.line +
+                RESTORE +
+                FORWARD(2 + readUser.cursor) // +2 for the prompt
         );
     });
 }

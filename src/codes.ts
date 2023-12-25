@@ -7,6 +7,7 @@ function SGR(code: number | string) {
 export const RED = SGR(31);
 export const YELLOW = SGR(33);
 export const RESET = SGR(0);
+export const BLUE = SGR(34);
 
 export const SAVE = `${ESC}[s`;
 export const RESTORE = `${ESC}[u`;
