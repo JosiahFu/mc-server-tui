@@ -2,7 +2,6 @@
   "name": "mc-server-tui",
   "version": "1.0.0",
   "description": "A TUI for Minecraft Servers",
-  "main": "index.js",
   "scripts": {
     "build": "rollup -c",
     "typecheck": "tsc"
@@ -11,7 +10,12 @@
     "type": "git",
     "url": "git+https://github.com/JosiahFu/mc-server-tui.git"
   },
-  "author": "Josiah Fu",
+  "keywords": [
+    "minecraft",
+    "minecraft server",
+    "tui"
+  ],
+  "author": "Josiah Fu <josiahfu@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/JosiahFu/mc-server-tui/issues"
