@@ -17,7 +17,7 @@ async function runUI(child_process: ChildProcess) {
     readUser.prompt();
     
     readUser.on('line', line => {
-        child_process.stdin?.write(line);
+        child_process.stdin?.write(line + '\n');
         readUser.prompt();
     });
     
