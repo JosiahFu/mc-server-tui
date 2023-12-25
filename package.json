@@ -1,0 +1,26 @@
+{
+  "name": "mc-server-tui",
+  "version": "1.0.0",
+  "description": "A TUI for Minecraft Servers",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "node dist/index.js cat",
+    "pretest": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JosiahFu/mc-server-tui.git"
+  },
+  "author": "Josiah Fu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JosiahFu/mc-server-tui/issues"
+  },
+  "homepage": "https://github.com/JosiahFu/mc-server-tui#readme",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "typescript": "^5.3.3"
+  }
+}
