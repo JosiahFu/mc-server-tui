@@ -3,7 +3,6 @@ import { createInterface } from 'readline';
 import { colorize } from './colorizer';
 import { ERASE, FORWARD, RESTORE, SAVE } from './codes';
 
-
 async function runUI(child_process: ChildProcess) {
     const readUser = createInterface({
         input: process.stdin,
@@ -11,18 +10,28 @@ async function runUI(child_process: ChildProcess) {
         prompt: '> ',
         terminal: true,
     });
-    const readOutput = createInterface(colorize(child_process.stdout!))
-    
+    const readOutput = createInterface(colorize(child_process.stdout!));
+
     process.stdout.write(SAVE);
     readUser.prompt();
-    
+
     readUser.on('line', line => {
         child_process.stdin?.write(line + '\n');
         readUser.prompt();
     });
-    
+
     readOutput.on('line', line => {
-        process.stdout.write(RESTORE + ERASE + line + '\n' + SAVE + '> ' + readUser.line + RESTORE + FORWARD(2 + readUser.cursor));
+        process.stdout.write(
+            RESTORE +
+            ERASE +
+            line +
+            '\n' +
+            SAVE +
+            '> ' +
+            readUser.line +
+            RESTORE +
+            FORWARD(2 + readUser.cursor) // +2 for the prompt
+        );
     });
 }
 
