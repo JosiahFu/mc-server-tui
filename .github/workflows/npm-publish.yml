@@ -16,8 +16,7 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
-      - run: npm run typecheck
-      - run: npm run build
+      - run: npm run build:prod
 
   publish-npm:
     needs: build

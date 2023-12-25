@@ -1,17 +1,13 @@
 import typescript from '@rollup/plugin-typescript';
 import nodeResolve from '@rollup/plugin-node-resolve';
+import { defineConfig } from 'rollup';
 
-/** @type {import('rollup').RollupOptions[]} */
-const config = [
-    {
-        input: 'src/index.ts',
-        output: {
-            file: 'dist/index.js',
-            format: 'es',
-            sourcemap: true,
-        },
-        plugins: [typescript(), nodeResolve()],
+export default defineConfig({
+    input: 'src/index.ts',
+    output: {
+        file: 'dist/index.js',
+        format: 'es',
+        sourcemap: true,
     },
-];
-
-export default config;
+    plugins: [typescript(), nodeResolve()],
+});
