@@ -13,7 +13,10 @@
   "keywords": [
     "minecraft",
     "minecraft server",
-    "tui"
+    "tui",
+    "terminal user interface",
+    "log",
+    "colorize"
   ],
   "author": "Josiah Fu <josiahfu@gmail.com>",
   "license": "MIT",

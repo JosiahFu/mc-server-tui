@@ -10,6 +10,9 @@ messing up the command input.
 mc-server-tui [--stop-command COMMAND] COMMAND
 ```
 
+Press Ctrl+C to send the stop command to the server, then Ctrl+C again to force
+stop if the server is unresponsive.
+
 ### Options
 
 **--stop-command** Set the admin command to send to Minecraft to stop it.
