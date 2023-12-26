@@ -5,8 +5,12 @@ A Terminal User Interface (TUI) for Minecraft servers.
 ## Usage
 
 ```
-mc-server-tui [COMMAND]
+mc-server-tui [--stop-command COMMAND] COMMAND
 ```
+
+### Options
+
+**--stop-command** Set the admin command to send to Minecraft to stop it. `stop` by default.
 
 ## Examples
 
@@ -20,4 +24,10 @@ If you run the jar with arguments directly:
 
 ```
 mc-server-tui java -Xmx4096M -Xms4096M -jar server.jar nogui
+```
+
+If your server uses a custom function to stop the server:
+
+```
+mc-server-tui --stop-command 'function run scripts:stop' ./start.sh
 ```
