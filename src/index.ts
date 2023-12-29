@@ -33,14 +33,22 @@ child_process.on('exit', code => {
 
 let stopping = false;
 
-runUI(child_process, () => {
+const onStop = (manual = false) => {
     if (stopping) {
         child_process.kill();
         return;
     }
     stopping = true;
-    console.warn(
-        `${BLUE}\nSending stop command to server...\nPress Ctrl+C again to force stop${RESET}`
-    );
+
+    if (manual) {
+        console.warn(
+            `${BLUE}\nSending stop command to server...\nPress Ctrl+C again to force stop${RESET}`
+        );
+    }
+
     child_process.stdin.write(`${STOP_COMMAND}\n`);
-});
+}
+
+process.on('SIGTERM', () => onStop(false));
+
+runUI(child_process, () => onStop(true));
