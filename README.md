@@ -18,7 +18,7 @@ stop if the server is unresponsive.
 **--stop-command** Set the admin command to send to Minecraft to stop it.
 `stop` by default.
 
-**--table** Assumes the default log format (`[timestamp] [category] info`) and aligns the columns. Off by default.
+**--table** Assumes the default log format (`[timestamp] [category]: info`) and aligns the columns. Off by default.
 
 **--category-width** For table layout, sets how wide the category should be padded to. Set it to the widest category you observe in your log. 12 by default.
 

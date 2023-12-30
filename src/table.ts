@@ -1,6 +1,6 @@
 import { Transform, TransformCallback } from 'stream';
 
-const LOG_REGEX = /\[(.*?)\] \[(.*?)\] (.*)/;
+const LOG_REGEX = /\[(.*?)\] \[(.*?)\]: (.*)/;
 
 class TableTransform extends Transform {
     categoryWidth: number;
