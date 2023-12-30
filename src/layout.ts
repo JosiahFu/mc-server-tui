@@ -2,15 +2,16 @@ import { ChildProcess } from 'child_process';
 import { createInterface } from 'readline';
 import { ColorizerTransform } from './colorizer';
 import { ERASE, FORWARD, RESTORE, SAVE } from './codes';
+import { TableTransform } from './table';
 
-async function runUI(child_process: ChildProcess, onSigInt?: () => void) {
+async function runUI(child_process: ChildProcess, table: boolean, categoryWidth: number, onSigInt?: () => void) {
     const readUser = createInterface({
         input: process.stdin,
         output: process.stdout,
         prompt: '> ',
         terminal: true,
     });
-    const output = child_process.stdout!.pipe(new ColorizerTransform());
+    const output = (table ? child_process.stdout!.pipe(new TableTransform(categoryWidth)) : child_process.stdout!).pipe(new ColorizerTransform());
 
     process.stdout.write(SAVE);
     readUser.prompt();

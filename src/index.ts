@@ -3,25 +3,9 @@
 import { spawn } from 'child_process';
 import { runUI } from './layout';
 import { BLUE, RESET } from './codes';
+import { processArgs } from './args';
 
-// Parse Args
-
-const args = process.argv.slice(2); // Remove the executable and script path
-
-let STOP_COMMAND = 'stop';
-
-if (args[0] === '--stop-command' && args[1]) {
-    args.shift();
-    STOP_COMMAND = args.shift()!;
-}
-
-const command = args.shift();
-
-if (command === undefined) {
-    console.error('No command provided');
-    process.exit(1);
-}
-
+const { command, args, stopCommand, categoryWidth, table } = processArgs(process.argv);
 
 const child_process = spawn(command, args);
 
@@ -46,9 +30,9 @@ const onStop = (manual = false) => {
         );
     }
 
-    child_process.stdin.write(`${STOP_COMMAND}\n`);
+    child_process.stdin.write(`${stopCommand}\n`);
 }
 
 process.on('SIGTERM', () => onStop(false));
 
-runUI(child_process, () => onStop(true));
+runUI(child_process, table, categoryWidth, () => onStop(true));
