@@ -4,7 +4,7 @@ import { RED, RESET, YELLOW } from './codes';
 const colors = Object.entries({
     ERR: RED,
     WARN: YELLOW,
-    INFO: '',
+    INFO: RESET,
 });
 
 // Assumes input does not have partial lines
